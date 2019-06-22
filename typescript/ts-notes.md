@@ -19,8 +19,8 @@ Or, you can add `suppressImplicitAnyIndexErrors: true`in `tsconfig` to skip this
 
 ### enum in Typescript
 
-[Ref](https://ts.xcatliu.com/advanced/enum)
-[Typescript_Playground](<https://www.typescriptlang.org/play/index.html#src=enum%20Days%20%7B%20Sun%20%3D%207%2C%20Mon%20%3D%201%2C%20Tue%2C%20Wed%2C%20Thu%2C%20Fri%2C%20Sat%20%7D%3B%0D%0A%0D%0Aalert(Days%5BDays.Mon%5D%2B%22%20%22%2BDays.Mon)>)
+- [Ref](https://ts.xcatliu.com/advanced/enum)
+- [Typescript_Playground](<https://www.typescriptlang.org/play/index.html#src=enum%20Days%20%7B%20Sun%20%3D%207%2C%20Mon%20%3D%201%2C%20Tue%2C%20Wed%2C%20Thu%2C%20Fri%2C%20Sat%20%7D%3B%0D%0A%0D%0Aalert(Days%5BDays.Mon%5D%2B%22%20%22%2BDays.Mon)>)
 
 简单的例子
 
