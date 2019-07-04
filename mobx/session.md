@@ -1,3 +1,16 @@
+# 前言
+
+当我们使用 React 开发 web 应用程序时，在 React 组件内，可以使用`this.setState()`和`this.state`处理或访问组件内状态，但是随着项目变大，状态变复杂，通常需要考虑组件间通信问题，主要包括以下两点：
+
+1. 某一个状态需要在多个组件间共享（访问，更新）；
+2. 某组件内交互需要触发其他组件的状态更新；
+
+关于这些问题，React 组件开发实践推荐将公用组件状态提升：
+
+> Often, several components need to reflect the same changing data. We recommend lifting the shared state up to their closest common ancestor
+
+> 通常多组件需要处理同一状态，我们推荐将共享状态提升至他们的共同最近祖先组件内。更多详情查看
+
 # MobX with React Introduction
 
 Mobx 是一个简单的状态管理库，可以方便地在 react 中使用。
@@ -26,7 +39,9 @@ Mobx 是一个简单的状态管理库，可以方便地在 react 中使用。
 
 > @observer (mobx-react) - make react component reactive to the state change. Basically, it calls the component’s render function when the state changes.
 
-ES6 version
+**需要补充 observer 代码**
+
+<!-- ES6 version -->
 
 ```js
 import { observable } from "mobx";
@@ -38,7 +53,7 @@ class Todo {
 }
 ```
 
-ES5 version
+<!-- ES5 version
 
 ```js
 import { decorate, observable } from "mobx";
@@ -52,7 +67,7 @@ decorate(Todo, {
   title: observable,
   finished: observable
 });
-```
+``` -->
 
 ### 2. Computed
 
@@ -314,3 +329,32 @@ MobX 4 的重要局限性:
 
 - Observable 数组并非真正的数组，所以它们无法通过 Array.isArray() 的检查。最常见的处理方法是在传递给第三方库之前，你经常需要先对其进行 .slice() 操作，从而得到一个浅拷贝的真正数组。
 - 向一个已存在的 observable 对象中添加属性不会被自动捕获。要么使用 observable 映射来替代，要么使用工具函数 中方法来对想要动态添加属性的对象进行读/写/迭代。
+
+MobX injecting issues:
+
+[ref1](https://github.com/mobxjs/mobx-react/issues/256)
+
+```js
+export type MainStoreProps = {mainStore: MainStore};
+export const mainStoreDefaultProps = {mainStore: (null as unknown) as MainStore};
+
+interface Props extends MainStoreProps{}
+
+@inject(MainStoreName)
+@observer
+export class SomeComp extends Component<Props> {
+  static defaultProps = mainStoreDefaultProps;
+}
+```
+
+[ref2](https://mobx-react.js.org/recipes-inject)
+
+```js
+const NameDisplayer = ({ name }) => <h1>{name}</h1>;
+
+const UserNameDisplayer = inject(stores => ({
+  name: stores.userStore.name
+}))(NameDisplayer);
+
+const App = () => <UserNameDisplayer name="Is this name used? Who knows." />;
+```
