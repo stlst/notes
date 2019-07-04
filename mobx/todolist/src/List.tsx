@@ -4,6 +4,7 @@ import ListStore from "./listStore";
 
 interface IProps {
   listStore?: ListStore;
+  anotherProp: string;
 }
 
 @inject("listStore")

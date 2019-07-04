@@ -2,8 +2,8 @@ import React from "react";
 import { Provider } from "mobx-react";
 import "./App.css";
 import ListStore from "./listStore";
-import { List } from "./List";
 import Input from "./Input";
+import ListWithExtendProps from "./ListWithExtendProps";
 const listStore = new ListStore();
 const App: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const App: React.FC = () => {
       <div className="App">
         <Input />
         <ul>
-          <List />
+          <ListWithExtendProps anotherProp="hello" />
         </ul>
       </div>
     </Provider>

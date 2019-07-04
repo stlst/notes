@@ -2,7 +2,7 @@ import { observable, action, computed, autorun, runInAction, flow } from "mobx";
 import { configure } from "mobx";
 
 configure({
-  enforceActions: "strict"
+  enforceActions: "always"
 });
 
 const fetchItemDetail = async (item: string) => {
