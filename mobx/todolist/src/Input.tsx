@@ -1,9 +1,9 @@
 import React from "react";
 import { inject } from "mobx-react";
-import ListStore from "./listStore";
+import ListStoreAsDemo from "./listStoreAsDemo";
 
 interface IProps {
-  listStore?: ListStore;
+  listStore?: ListStoreAsDemo;
 }
 interface IState {
   inputValue: string;
@@ -16,7 +16,7 @@ export default class Input extends React.Component<IProps, IState> {
     // this.props.listStore!.list.push(
     //   `${this.state.inputValue} (without enforceAction)`
     // );
-    // this.props.listStore!.addListItemWithAction(this.state.inputValue);
+    this.props.listStore!.addListItemWithAction(this.state.inputValue);
     // this.props.listStore!.addListItemWithAsyncAction(this.state.inputValue);
     // this.props.listStore!.addListItemWithGenerator(this.state.inputValue);
     this.setState({ inputValue: "" });

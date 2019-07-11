@@ -3,8 +3,8 @@ import React from "react";
 import "./App.css";
 import Input from "./Input";
 import { ListAsDemo } from "./ListAsDemo";
-import ListStore from "./listStore";
-const listStore = new ListStore();
+import ListStoreAsDemo from "./listStoreAsDemo";
+const listStore = new ListStoreAsDemo();
 const App: React.FC = () => {
   return (
     <Provider listStore={listStore}>

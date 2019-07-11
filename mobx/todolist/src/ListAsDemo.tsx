@@ -1,9 +1,9 @@
 import React from "react";
 import { inject, observer } from "mobx-react";
-import ListStore from "./listStore";
+import ListStoreAsDemo from "./listStoreAsDemo";
 
 interface IProps {
-  listStore?: ListStore;
+  listStore?: ListStoreAsDemo;
   anotherProp: string;
 }
 
@@ -44,9 +44,9 @@ export class ListAsDemo extends React.Component<IProps> {
   //   );
   // }
 
-  public componentWillReact() {
-    console.log("in componentWillReact");
-  }
+  // public componentWillReact() {
+  //   console.log("in componentWillReact");
+  // }
 
   public onDelete = (item: string) => () => {
     this.props.listStore!.deleteListItem(item);
@@ -74,7 +74,6 @@ export class ListAsDemo extends React.Component<IProps> {
   });
 
   public render() {
-    console.log("list", this.props.listStore!.list);
     return (
       <>
         <p>total submit: {this.props.listStore!.listLength}</p>

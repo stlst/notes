@@ -4,7 +4,7 @@ configure({
   enforceActions: "always"
 });
 
-export default class ListStore {
+export default class ListStoreAsDemo {
   @observable list: string[] = [];
   @computed get listLength() {
     return this.list.length;
@@ -42,7 +42,7 @@ export default class ListStore {
   };
 
   public addListItemWithGenerator = flow(function* addListItemWithGenerator(
-    this: ListStore, // bind this to the class in generator function
+    this: ListStoreAsDemo, // bind this to the class in generator function
     item: string
   ) {
     try {

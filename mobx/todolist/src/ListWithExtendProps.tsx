@@ -1,8 +1,8 @@
 import React from "react";
 import { inject, observer } from "mobx-react";
-import ListStore from "./listStore";
+import ListStoreAsDemo from "./listStoreAsDemo";
 
-export type ListStoreProps = { listStore: ListStore };
+export type ListStoreProps = { listStore: ListStoreAsDemo };
 // export type ListStoreProps = {
 //   list: string[];
 //   listLength: number;
@@ -12,7 +12,7 @@ export const listStoreDefaultProps = {
   // list: (null as unknown) as string[],
   // listLength: (null as unknown) as number,
   // deleteListItem: (null as unknown) as (item: string) => void
-  listStore: (null as unknown) as ListStore
+  listStore: (null as unknown) as ListStoreAsDemo
 };
 
 interface Props extends ListStoreProps {
