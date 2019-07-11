@@ -1,32 +1,41 @@
-import { observable, action, computed, autorun, runInAction, flow } from "mobx";
-import { configure } from "mobx";
+import { action, autorun, computed, configure, flow, observable } from "mobx";
 
 configure({
   enforceActions: "always"
 });
 
-const fetchItemDetail = async (item: string) => {
-  return await `${item} detail`;
-};
-
 export default class ListStore {
   @observable list: string[] = [];
-  @computed
-  get listLength() {
+  @computed get listLength() {
     return this.list.length;
   }
 
-  constructor() {
-    autorun(() => console.log("msg", this.listLength));
-  }
+  // constructor() {
+  //   autorun(() => console.log("using autorun", this.listLength));
+  // }
+
+  private fetchItemDetail = async (item: string) => {
+    const itemDetail = await `${item} detail`;
+    return itemDetail;
+  };
 
   @action
-  public addListItem = async (item: string) => {
+  public addListItemWithAction = (item: string) => {
+    this.list.push(item);
+    console.log("using action: ", this.list);
+  };
+
+  @action
+  public addListItemWithAsyncAction = async (item: string) => {
     try {
-      const itemDetail = await fetchItemDetail(item);
+      const itemDetail = await this.fetchItemDetail(item);
       // need to add runInAction after async actions
-      runInAction(() => this.list.push(itemDetail));
-      // this.list.push(itemDetail);
+      this.list.push(itemDetail);
+      // action("inlineAction", () => {
+      //   this.list.push(itemDetail);
+      // })();
+      // runInAction(() => this.list.push(itemDetail));
+      console.log("using async action: ", this.list);
     } catch (error) {
       console.log("error", error);
     }
@@ -37,8 +46,9 @@ export default class ListStore {
     item: string
   ) {
     try {
-      const itemDetail = yield fetchItemDetail(item);
+      const itemDetail = yield this.fetchItemDetail(item);
       this.list.push(itemDetail);
+      console.log("using generator: ", this.list);
     } catch (error) {
       console.log("error", error);
     }

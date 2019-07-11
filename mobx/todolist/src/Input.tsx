@@ -13,10 +13,12 @@ export default class Input extends React.Component<IProps, IState> {
   public state = { inputValue: "" };
 
   public onSubmit = () => {
-    // this.props.listStore!.list.push("without enforce action");
-    // this.props.listStore!.addListItem(this.state.inputValue);
-    this.props.listStore!.addListItemWithGenerator(this.state.inputValue);
-    console.log("after generator: ", this.props.listStore!.list);
+    // this.props.listStore!.list.push(
+    //   `${this.state.inputValue} (without enforceAction)`
+    // );
+    // this.props.listStore!.addListItemWithAction(this.state.inputValue);
+    // this.props.listStore!.addListItemWithAsyncAction(this.state.inputValue);
+    // this.props.listStore!.addListItemWithGenerator(this.state.inputValue);
     this.setState({ inputValue: "" });
   };
 
