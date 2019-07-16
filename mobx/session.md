@@ -58,7 +58,7 @@ class Todo {
 }
 ```
 
-<!-- ES5 version
+ES5 version
 
 ```js
 import { decorate, observable } from "mobx";
@@ -72,7 +72,7 @@ decorate(Todo, {
   title: observable,
   finished: observable
 });
-``` -->
+```
 
 ### 2. Computed
 
