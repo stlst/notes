@@ -436,3 +436,40 @@ const App = () => <UserNameDisplayer name="Is this name used? Who knows." />;
 
 Ref:
 [MobX 绑定过程和其中的一些坑的总结](https://blog.souche.com/mobxbang-ding-guo-cheng/)
+
+### disposeOnUnmount(componentInstance, propertyKey | function | function[])
+
+Function (and decorator) that makes sure a function (usually a disposer such as the ones returned by reaction, autorun, etc.) is automatically executed as part of the componentWillUnmount lifecycle event.
+
+```js
+import { disposeOnUnmount } from "mobx-react"
+
+class SomeComponent extends React.Component {
+    // decorator version
+    @disposeOnUnmount
+    someReactionDisposer = reaction(...)
+
+    // decorator version with arrays
+    @disposeOnUnmount
+    someReactionDisposers = [
+        reaction(...),
+        reaction(...)
+    ]
+
+
+    // function version over properties
+    someReactionDisposer = disposeOnUnmount(this, reaction(...))
+
+    // function version inside methods
+    componentDidMount() {
+        // single function
+        disposeOnUnmount(this, reaction(...))
+
+        // or function array
+        disposeOnUnmount(this, [
+            reaction(...),
+            reaction(...)
+        ])
+    }
+}
+```
