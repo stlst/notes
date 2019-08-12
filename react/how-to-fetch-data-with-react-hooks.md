@@ -90,7 +90,7 @@ const useDataApi = (initialUrl, initialData) => {
 useEffect(() => {
     let didCancel = false;
     const fetchData = async () => {
-        if (didCancel) {
+        if (!didCancel) {
             // fetch data
         }
  } catch (error) {
