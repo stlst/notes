@@ -4,6 +4,12 @@ Hooks are a new addition in React 16.8. They let you use state and other React f
 
 If you want to learn about hooks, go to this site: https://reactjs.org/docs/hooks-intro.html
 
+### About Hooks
+
+**What is a Hook?** A Hook is a special function that lets you “hook into” React features. For example, useState is a Hook that lets you add React state to function components. We’ll learn other Hooks later.
+
+**When would I use a Hook?** If you write a function component and realize you need to add some state to it, previously you had to convert it to a class. Now you can use a Hook inside the existing function component. We’re going to do that right now!
+
 ### Motivation
 
 #### It’s hard to reuse stateful logic between components
@@ -34,11 +40,101 @@ To solve these problems, Hooks let you use more of React’s features without cl
 
 ### 简单计时器例子
 
-### 介绍
+- hooks 用于函数型组件中，不适用于 class 中
+
+### Basic Hooks
 
 #### useState
 
+- 相当于 this.state in class
+- useState() 的初始值
+- useState() 的返回值
+
+```js
+import React, { useState } from "react";
+
+function Example() {
+  // Declare a new state variable, which we'll call "count"
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
+  );
+}
+```
+
+Equivalent Class Example
+If you used classes in React before, this code should look familiar:
+
+```js
+class Example extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <p>You clicked {this.state.count} times</p>
+        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+          Click me
+        </button>
+      </div>
+    );
+  }
+}
+```
+
+Multiple states
+
+```js
+function Box() {
+  const [state, setState] = useState({
+    left: 0,
+    top: 0,
+    width: 100,
+    height: 100
+  });
+  // ...
+}
+```
+
+> This is because when we update a state variable, we replace its value. This is different from this.setState in a class, which merges the updated fields into the object.
+> we recommend to split state into multiple state variables based on which values tend to change together.
+
 #### useEffect
+
+> The Effect Hook lets you perform side effects in function components:
+> Data fetching, setting up a subscription, and manually changing the DOM in React components are all examples of side effects.
+> If you’re familiar with React class lifecycle methods, you can think of useEffect Hook as componentDidMount, componentDidUpdate, and componentWillUnmount combined.
+> Effects Without Cleanup vs Effects with Cleanup
+> 需要清理的 effects: set up a subscription
+> have to duplicate the code between these two lifecycle methods in class: useEffect runs both after the first render and after every update
+
+```js
+import React, { useState, useEffect } from "react";
+
+function Example() {
+  const [count, setCount] = useState(0);
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    // Update the document title using the browser API
+    document.title = `You clicked ${count} times`;
+  });
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
+  );
+}
+```
 
 ```js
 useEffect(() => {
@@ -54,18 +150,61 @@ useEffect(() => {
 });
 ```
 
-#### useCallback
-
-#### useReducer
+```js
+// ...
+useEffect(() => {
+  function handleWindowMouseMove(e) {
+    // Spreading "...state" ensures we don't "lose" width and height
+    setState(state => ({ ...state, left: e.pageX, top: e.pageY }));
+  }
+  // Note: this implementation is a bit simplified
+  window.addEventListener("mousemove", handleWindowMouseMove);
+  return () => window.removeEventListener("mousemove", handleWindowMouseMove);
+}, []);
+// ...
+```
 
 #### useContext
 
-#### useLayoutUpdate...
+### Additional Hooks
+
+#### useReducer
+
+#### useCallback
+
+#### useMemo
+
+#### useRef
+
+How to get the previous props or state?
+Currently, you can do it manually with a ref:
+
+```js
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  const prevCountRef = useRef();
+  useEffect(() => {
+    prevCountRef.current = count;
+  });
+  const prevCount = prevCountRef.current;
+
+  return (
+    <h1>
+      Now: {count}, before: {prevCount}
+    </h1>
+  );
+}
+```
+
+#### useImperativeHandle
+
+#### useLayoutEffect
+
+#### useDebugValue
 
 - simple useState example: todo list
 - simple useContext example
-- Extracting a Custom Hook Sample : how to fetch data with react hooks?
-  A custom Hook is a JavaScript function whose name starts with ”use” and that may call other Hooks. For example, useFriendStatus below is our first custom Hook:
 
 ```js
 import React, { useState, useEffect } from "react";
@@ -156,4 +295,29 @@ This is why Hooks must be called on the top level of our components. If we want 
   ✅ Call Hooks from React function components. 在 React 函数型组件内调用 hooks.
   ✅ Call Hooks from custom Hooks (we’ll learn about them on the next page). 在自己定义的 custom hooks 中调用 hooks.
 
+> You can’t use Hooks inside of a class component.
+
 ### [Building Your Own Hooks](https://reactjs.org/docs/hooks-custom.html)
+
+- Extracting a Custom Hook Sample : how to fetch data with react hooks?
+  A custom Hook is a JavaScript function whose name starts with ”use” and that may call other Hooks. For example, useFriendStatus below is our first custom Hook:
+
+### From Classes to Hooks
+
+- How do lifecycle methods correspond to Hooks?
+
+**constructor**: Function components don’t need a constructor. You can initialize the state in the useState call. If computing the initial state is expensive, you can pass a function to useState.
+
+**getDerivedStateFromProps**: Schedule an update while rendering instead.
+
+**shouldComponentUpdate**: See React.memo below.
+
+**render**: This is the function component body itself.
+
+**componentDidMount, componentDidUpdate, componentWillUnmount**: The useEffect Hook can express all combinations of these (including less common cases).
+
+**componentDidCatch and getDerivedStateFromError**: There are no Hook equivalents for these methods yet, but they will be added soon.
+
+### Ref
+
+- [Hooks FAQ](https://reactjs.org/docs/hooks-faq.html#which-versions-of-react-include-hooks)
