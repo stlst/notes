@@ -1,0 +1,5 @@
+[Why the assets must be absolute path?](https://github.com/facebook/create-react-app/issues/3986#issuecomment-363452210)
+
+> To expand on this a little.. it’s not a React Router limitation. You just can’t have relative paths if you want to have client-side routing. Think about it: you want your app to load for arbitrarily nested URL like /todos/completed. If paths were relative, the browser would attempt to load JS from /todos/completed/static/js which wouldn’t work. And you can’t even use ../../ because URLs can be truly arbitrary. You don’t know in advance how many layers of nesting you need to “undo” to get to the JS asset root. And even if you calculated this, you can’t do this with a static HTML file.
+
+> So our default is to emit absolute paths. By specifying the homepage key in package.json you control the root URL prefix. For example if your app is hosted at /myapp. Finally you can force it to use relative paths by specifying "." as a homepage. This is kind of hacky but works. But as I explained above this would be incompatible with client-side routing, unless you stick with using hash-based approaches.
