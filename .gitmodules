@@ -1,0 +1,3 @@
+[submodule "react/react-hooks-demo"]
+	path = react/react-hooks-demo
+	url = https://github.com/stlst/react-hooks-demo.git
