@@ -1,0 +1,10 @@
+[
+    {"packageName":"@agillic/create-reducer","version":"0.0.1"},
+    {"packageName":"@amplitude/ua-parser-js","version":"0.7.19"},
+    {"packageName":"@ant-design/create-react-context","version":"0.2.4"},
+    {"packageName":"@ant-design/icons","version":"1.2.1"},
+    {"packageName":"@ant-design/icons-react","version":"1.1.5"},
+    {"packageName":"@ant-design/icons","version":"1.2.1"},
+    {"packageName":"@babel/core","version":"7.3.4"},
+    {"packageName":"@babel/helper-builder-react-jsx","version":"7.3.0"}
+]
