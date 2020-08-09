@@ -47,7 +47,7 @@ console.log(Days[6] === "Sat"); // true
 
 ```js
 var Days;
-(function(Days) {
+(function (Days) {
   Days[(Days["Sun"] = 0)] = "Sun";
   Days[(Days["Mon"] = 1)] = "Mon";
   Days[(Days["Tue"] = 2)] = "Tue";
@@ -56,4 +56,28 @@ var Days;
   Days[(Days["Fri"] = 5)] = "Fri";
   Days[(Days["Sat"] = 6)] = "Sat";
 })(Days || (Days = {}));
+```
+
+## 20200809 update
+
+[An index signature parameter type cannot be a union type. Consider using a mapped object type ins...](https://www.jianshu.com/p/9cd6ba509515)
+希望一个类型的键值是联合类型中固定的几个:
+
+```ts
+const enum INFO_KEYS {
+  TEL = "tel",
+  AGE = "age",
+}
+// or
+// type IInfoKeys = 'tel' | 'age';
+
+interface IAreaInfo {
+  area_id: number;
+  area_name: string;
+}
+
+export type IPersonnalInfo = {
+  [key in INFO_KEYS]: number; // or [key in IInfoKeys]: number;
+} &
+  IAreaInfo;
 ```
