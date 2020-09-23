@@ -7,3 +7,6 @@
 [submodule "mockServer"]
 	path = mockServer
 	url = https://github.com/stlst/mockServer.git
+[submodule "nestjs/nest-demo"]
+	path = nestjs/nest-demo
+	url = https://github.com/stlst/nest-demo.git
