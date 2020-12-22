@@ -1,10 +1,10 @@
-// // 贪婪匹配与非贪婪匹配
+// 贪婪匹配与非贪婪匹配
 // var str = "aababbb";
 // var reg = /a+/g;
 // console.log(str.match(reg)); // ["aa"]
 // // 改为非贪婪匹配，用?，能匹配一次绝对不匹配多次
-// var reg = /a+?/g;
-// console.log(str.match(reg)); // ["a","a","a"]
+// var reg1 = /a+?/g;
+// console.log(str.match(reg1)); // ["a","a","a"]
 
 
 
@@ -71,7 +71,7 @@
 // var re = /(\w+) (\w+)/;
 // var str = "John Smith";
 // var newstr = str.replace(
-//     re, "My first name is $1. My last name is $2."
+//     re, "I am $&. My first name is $1. My last name is $2."
 // );
 // console.log(newstr);
 
@@ -96,12 +96,13 @@
 
 // 使用场景一：从字符串中提取出符合特定格式的子字符串:
 // 1. 提取出 @Emran @Raju @Noman
-// 2. 保留原话，去掉 @ 字符
+// 2. 保留原话， 去掉 @ 字符
 // const str =
-// 'All of us except @Emran, @Raju and @Noman was there';
+//     'All of us except @Emran, @Raju and @Noman was there';
 
 
-
+// console.log(str.match(/@\w+/g))
+// console.log(str.replace(/@(\w+)/g, '$1'))
 
 
 
@@ -139,8 +140,18 @@
 
 
 
-// []里面的是个项目编号，现在想提取出项目编号 T1916323
-// const str = '[T1916323] 车主运营分析平台'
+// [] 里面的是个项目编号， 现在想提取出项目编号 T1916323
+const str = '[T1916323] [T123]车主运营分析平台'
+
+
+
+
+
+
+
+
+const a = str.replace(/^\[(\w\d{7})\].*$/g, '$1')
+console.log(a)
 
 
 
@@ -200,7 +211,15 @@
 // - 由数字组成
 // - 用‘-’分割开
 // - 第一组和最后一组为2个数字，中间的三组为4个数字,如：
-// const str = '78-1234-4567-1711-17'
+const str = '78-1234-4567-1711-17'
+
+
+const regex = /\d{2}(-\d{4}){3}-\d{2}/
+
+
+
+
+
 
 
 
