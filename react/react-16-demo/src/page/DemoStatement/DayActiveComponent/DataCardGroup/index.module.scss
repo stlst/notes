@@ -1,0 +1,19 @@
+.errorContainer {
+  height: 100px;
+
+  & p {
+    color: red;
+  }
+}
+
+.emptyContainer {
+  height: 100px;
+
+  & p {
+    color: green;
+  }
+}
+
+.dataContainer {
+  height: 100px;
+}
