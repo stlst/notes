@@ -10,3 +10,6 @@
 [submodule "nestjs/nest-demo"]
 	path = nestjs/nest-demo
 	url = https://github.com/stlst/nest-demo.git
+[submodule "react/react-gradual-upgrade-demo"]
+	path = react/react-gradual-upgrade-demo
+	url = https://github.com/reactjs/react-gradual-upgrade-demo.git
