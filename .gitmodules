@@ -10,3 +10,6 @@
 [submodule "react/react-gradual-upgrade-demo"]
 	path = react/react-gradual-upgrade-demo
 	url = https://github.com/reactjs/react-gradual-upgrade-demo.git
+[submodule "docker-and-k8s/k8s-workshop"]
+	path = docker-and-k8s/k8s-workshop
+	url = /Users/liangsht/Learning/k8s-workshop/k8s-workshop
