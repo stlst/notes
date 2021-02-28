@@ -1,9 +1,6 @@
 [submodule "react/react-hooks-demo"]
 	path = react/react-hooks-demo
 	url = https://github.com/stlst/react-hooks-demo.git
-[submodule "docker/k8s-workshop"]
-	path = docker/k8s-workshop
-	url = /Users/liangsht/Learning/k8s-workshop/k8s-workshop
 [submodule "mockServer"]
 	path = mockServer
 	url = https://github.com/stlst/mockServer.git
