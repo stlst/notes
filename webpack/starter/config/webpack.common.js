@@ -54,41 +54,41 @@ const plugins = [
   // new HtmlWebpackInjector(),
   new HtmlWebpackPlugin({
     filename: 'index.html',
-    template: path.resolve(__dirname, '../src/index.html'),
+    template: path.resolve(__dirname, '/../src/index.html'),
     chunks: ['index'],
-    // minify: {
-    //   // @see https://github.com/kangax/html-minifier#options-quick-reference
-    //   removeComments: true,
-    //   collapseWhitespace: true,
-    //   removeRedundantAttributes: true,
-    //   useShortDoctype: true,
-    //   removeEmptyAttributes: true,
-    //   removeStyleLinkTypeAttributes: true,
-    //   keepClosingSlash: true,
-    //   minifyJS: true,
-    //   minifyCSS: true,
-    //   minifyURLs: true,
-    // },
+    minify: {
+      // @see https://github.com/kangax/html-minifier#options-quick-reference
+      removeComments: true,
+      collapseWhitespace: true,
+      removeRedundantAttributes: true,
+      useShortDoctype: true,
+      removeEmptyAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      keepClosingSlash: true,
+      minifyJS: true,
+      minifyCSS: true,
+      minifyURLs: true,
+    },
   }),
   new HtmlWebpackPlugin({
     filename: 'zh-cn.html',
     // template: __dirname + '/index.html',
-    template: path.resolve(__dirname, '../src/index.html'),
+    template: path.resolve(__dirname, '/../src/index.html'),
     chunks: ['index'],
   }),
   new GettextHtmlPlugin({
-    langsPath: path.resolve(__dirname, '../langs'),
+    langsPath: path.resolve(__dirname, '/../langs'),
     sources: {
       'zh-cn.html': 'zh_CN',
     },
   }),
   new HtmlWebpackPlugin({
     filename: 'jp.html',
-    template: path.resolve(__dirname + '../src/index.html'),
+    template: path.resolve(__dirname + '/../src/index.html'),
     chunks: ['index'],
   }),
   new GettextHtmlPlugin({
-    langsPath: __dirname + '../langs',
+    langsPath: __dirname + '/../langs',
     sources: {
       'zh-cn.html': 'zh_CN',
       'jp.html': 'jp',
@@ -107,11 +107,11 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.html$/,
-      //   loader: 'html-withimg-loader',
-      //   exclude: ['/node_modules/'],
-      // },
+      {
+        test: /\.html$/,
+        loader: 'html-withimg-loader',
+        exclude: ['/node_modules/'],
+      },
       {
         test: /\.(jpg|png|gif|bmp|jpeg)$/,
         loader: 'url-loader',
