@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const entryUtil = require("./webpack.entry.util");
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
@@ -6,6 +7,35 @@ const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackInjector = require('html-webpack-injector');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const GettextHtmlPlugin = require('gettext-html-plugin');
+
+// module.exports = {
+//   entry: {
+//     index: 'index.js',
+//   },
+//   output: {
+//     path: __dirname + '/dist',
+//     filename: 'index.js',
+//   },
+//   plugins: [
+//     new HtmlWebpackPlugin({
+//       filename: 'index.html',
+//       template: __dirname + '/index.html',
+//       chunks: ['index'],
+//     }),
+//     new HtmlWebpackPlugin({
+//       filename: 'zh-cn.html',
+//       template: __dirname + '/index.html',
+//       chunks: ['index'],
+//     }),
+//     new GettextHtmlPlugin({
+//       langsPath: __dirname + '/langs',
+//       sources: {
+//         'zh-cn.html': 'zh_CN',
+//       },
+//     }),
+//   ],
+// };
 const plugins = [
   new CleanWebpackPlugin(),
   // new TransferWebpackPlugin([
@@ -21,59 +51,67 @@ const plugins = [
   //   },
   // ]),
   new ExtractTextPlugin('[name].[hash:8].css'),
-  new HtmlWebpackInjector(),
-];
-const entryJs = { indexJs: path.resolve(__dirname, '../src/index.js') };
-const entryHtml = [
-  {
+  // new HtmlWebpackInjector(),
+  new HtmlWebpackPlugin({
     filename: 'index.html',
     template: path.resolve(__dirname, '../src/index.html'),
-    // chunks: [
-    //   'es6promise_head',
-    //   'es5Shim_head',
-    //   'import_polyfill_head',
-    //   'jsencrypt_head',
-    //   'cryptoJS_head',
-    //   'initPage',
-    //   chunkName,
-    // ],
-  },
+    chunks: ['index'],
+    // minify: {
+    //   // @see https://github.com/kangax/html-minifier#options-quick-reference
+    //   removeComments: true,
+    //   collapseWhitespace: true,
+    //   removeRedundantAttributes: true,
+    //   useShortDoctype: true,
+    //   removeEmptyAttributes: true,
+    //   removeStyleLinkTypeAttributes: true,
+    //   keepClosingSlash: true,
+    //   minifyJS: true,
+    //   minifyCSS: true,
+    //   minifyURLs: true,
+    // },
+  }),
+  new HtmlWebpackPlugin({
+    filename: 'zh-cn.html',
+    // template: __dirname + '/index.html',
+    template: path.resolve(__dirname, '../src/index.html'),
+    chunks: ['index'],
+  }),
+  new GettextHtmlPlugin({
+    langsPath: path.resolve(__dirname, '../langs'),
+    sources: {
+      'zh-cn.html': 'zh_CN',
+    },
+  }),
+  new HtmlWebpackPlugin({
+    filename: 'jp.html',
+    template: path.resolve(__dirname + '../src/index.html'),
+    chunks: ['index'],
+  }),
+  new GettextHtmlPlugin({
+    langsPath: __dirname + '../langs',
+    sources: {
+      'zh-cn.html': 'zh_CN',
+      'jp.html': 'jp',
+    },
+  }),
+  new webpack.NamedModulesPlugin(),
+  // new webpack.HotModuleReplacementPlugin(),
+  // new webpack.NoEmitOnErrorsPlugin(),
 ];
-entryHtml.forEach((v) => {
-  plugins.push(
-    new HtmlWebpackPlugin(
-      Object.assign({}, v, {
-        minify: {
-          // @see https://github.com/kangax/html-minifier#options-quick-reference
-          removeComments: true,
-          collapseWhitespace: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeStyleLinkTypeAttributes: true,
-          keepClosingSlash: true,
-          minifyJS: true,
-          minifyCSS: true,
-          minifyURLs: true,
-        },
-      })
-    )
-  );
-});
 
 module.exports = {
-  entry: entryJs,
+  entry: { indexJs: path.resolve(__dirname, '../src/index.js') },
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].[hash:8].js',
   },
   module: {
     rules: [
-      {
-        test: /\.html$/,
-        loader: 'html-withimg-loader',
-        exclude: ['/node_modules/'],
-      },
+      // {
+      //   test: /\.html$/,
+      //   loader: 'html-withimg-loader',
+      //   exclude: ['/node_modules/'],
+      // },
       {
         test: /\.(jpg|png|gif|bmp|jpeg)$/,
         loader: 'url-loader',
