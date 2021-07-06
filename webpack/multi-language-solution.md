@@ -73,3 +73,12 @@ new HtmlWebpackPlugin({
 
 - `gettext-html-plugin`适用的`html-webpack-plugin`版本是@3.\*，与目前的最新版本相比有点落后，适用起来具有版本局限性
 - 如果想要针对不同语言配置不同图片，可以参考前面提到的配置不同 url 的方式。但如果是本地打包的图片，则需要特殊处理了。（因为本地打包时，`html-withimg-loader`、`url-loader`或者其他插件会同时读取并打包本地图像文件）
+
+
+### Ohter Reference
+
+- [webpack i18n国际化配置](https://blog.csdn.net/hsl0530hsl/article/details/78765996)
+- [通用的静态资源国际化方案](https://github.com/OneWayTech/i18n-static)
+- i18n-webpack-plugin
+- i18n-loader 
+- babel-plugin-i18n
