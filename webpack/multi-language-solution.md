@@ -20,7 +20,7 @@
 
 - 使用正则提取静态页面中的文本，按照 [Gettext](https://zh.wikipedia.org/zh-hans/Gettext) 标准生成翻译文件，随后在打包时，自动生成对应的翻译页面。
 
-Hook `html-webpack-plugin` 插件，在插件处理 HTML 之前，将对应的文本替换成翻译后的文本即可。
+- Hook `html-webpack-plugin` 插件，在插件处理 HTML 之前，将对应的文本替换成翻译后的文本即可。
 
 ```js
 compiler.hooks.compilation.tap("GettextHtmlPlugin", (compilation) => {
