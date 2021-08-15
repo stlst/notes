@@ -8,4 +8,10 @@ createApp(App)
       return h("div", "I am comp");
     },
   })
+  .directive("highlight", {
+    // 自定义指令
+    beforeMount(el, binding, vnode) {
+      el.style.background = binding.value;
+    },
+  })
   .mount("#app");

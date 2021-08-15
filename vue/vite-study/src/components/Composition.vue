@@ -27,8 +27,8 @@ export default {
 
     // 侦听器
     watch(
-      // () => data.counter,// 如果使用toRef进行了转换
-      counter, // 则可以直接counter
+      // () => data.counter,
+      counter, // 如果使用toRef进行了转换,则可以直接counter
       (val, oldValue) => {
         const p = desc.value;
         p.textContent = `counter change from ${oldValue} to ${val}`;

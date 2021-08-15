@@ -14,6 +14,25 @@
     <Emits @click="onClick" />
     <!-- 实例方法定义组件 -->
     <comp />
+    <!-- v-model的使用 -->
+    <VmodelTest v-model:counter="counter"></VmodelTest>
+    <!-- 等效于 -->
+    <!-- <VmodelTest :counter="counter" @update:counter="counter=$event" /> -->
+
+    <!-- render api -->
+    <RenderTest v-model:counter="counter">
+      <template v-slot:default> title </template>
+      <template v-slot:content> content </template>
+    </RenderTest>
+
+    <!-- 函数式组件 -->
+    <Functional level="1">一个动态h元素</Functional>
+
+    <!-- 异步组件 -->
+    <AsyncComp></AsyncComp>
+
+    <!-- 自定义指令 -->
+    <p v-if="true" v-highlight="'green'">highlight this text</p>
   </div>
 </template>
 
@@ -21,15 +40,39 @@
 import Composition from "./Composition.vue";
 import Emits from "./Emits.vue";
 import ModalButton from "./ModalButton.vue";
+import VmodelTest from "./VmodelTest.vue";
+import RenderTest from "./RenderTest.vue";
+import Functional from "./Functional.vue";
+import { defineAsyncComponent } from "vue";
 export default {
-  components: { Composition, ModalButton, Emits },
+  components: {
+    Composition,
+    ModalButton,
+    Emits,
+    VmodelTest,
+    RenderTest,
+    Functional,
+    // AsyncComp: () => import("./NextPage.vue"), // 以前的写法，但是vue3没法和函数式组件区分
+    AsyncComp: defineAsyncComponent({
+      loader: () => import("./NextPage.vue"), // 这样不会被打入主chunk中
+      // errorComponent:xxx,
+      // loadingComponent:xxx,
+      // timeout:300,
+      // delay:200,
+    }),
+  },
   name: "HelloWorld",
   props: {
     msg: String,
   },
+  data() {
+    return {
+      counter: 1,
+    };
+  },
   methods: {
     onClick() {
-      console.log("click me!");
+      console.log("click me!", this.counter);
     },
   },
 };

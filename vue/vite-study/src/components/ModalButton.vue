@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="modelOpen = true">弹出一个模态窗口</button>
+    <p-button @click="modelOpen = true">弹出一个模态窗口</p-button>
     <!-- 设置要传送去的地方 -->
     <teleport to="body">
       <!-- 被传送的内容 -->
