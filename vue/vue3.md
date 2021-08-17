@@ -101,3 +101,30 @@ createApp({
 - componentUpdated -> updated
 - 增加 beforeUnmount
 - unbind -> unmounted
+
+#### transition 类名变更
+
+- `v-enter` -> `v-enter-from`，与之对应的有`v-enter-to`
+- `v-leave` -> `v-leave-from`，与之对应的有`v-leave-to`
+
+#### 组件 watch 选项和实例方法`$watch`不再支持分隔符字符串路径（.）
+
+```js
+this.$watch(
+  () => this.foo.bar,
+  (v1, v2) => {
+    console.log(this.foo.bar);
+  }
+);
+```
+
+#### keyCode 作为`v-on`修饰符被移除
+
+```html
+<!-- 只能使用alias方式 -->
+<input v-on:keyup.enter="submit"></input>
+```
+
+#### `$on`,`$off` and `$once` 移除
+
+> 被认为不应该由 vue 提供，因此移除了，使用第三方库`mitt`实现

@@ -33,6 +33,10 @@
 
     <!-- 自定义指令 -->
     <p v-if="true" v-highlight="'green'">highlight this text</p>
+    <!-- 动画 -->
+    <TransitionTest></TransitionTest>
+    <!-- 发送和监听事件 -->
+    <button @click="sendMsg">emit event</button>
   </div>
 </template>
 
@@ -43,7 +47,13 @@ import ModalButton from "./ModalButton.vue";
 import VmodelTest from "./VmodelTest.vue";
 import RenderTest from "./RenderTest.vue";
 import Functional from "./Functional.vue";
+import TransitionTest from "./TransitionTest.vue";
 import { defineAsyncComponent } from "vue";
+
+// 事件派发和监听
+import mitt from "mitt";
+export const emitter = mitt();
+
 export default {
   components: {
     Composition,
@@ -60,6 +70,7 @@ export default {
       // timeout:300,
       // delay:200,
     }),
+    TransitionTest,
   },
   name: "HelloWorld",
   props: {
@@ -73,6 +84,9 @@ export default {
   methods: {
     onClick() {
       console.log("click me!", this.counter);
+    },
+    sendMsg() {
+      emitter.emit("someEvent", "foooo");
     },
   },
 };

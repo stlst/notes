@@ -3,7 +3,14 @@
 </template>
 
 <script>
-export default {};
+import { emitter } from "./HelloWorld.vue";
+export default {
+  mounted() {
+    emitter.on("someEvent", (msg) => {
+      console.log("someEvent", msg);
+    });
+  },
+};
 </script>
 
 <style></style>
