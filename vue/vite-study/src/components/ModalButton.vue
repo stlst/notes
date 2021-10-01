@@ -17,7 +17,7 @@
 <script>
 export default {
   data() {
-    return { modelOpen: true };
+    return { modelOpen: false };
   },
   //   setup() {},
 };
