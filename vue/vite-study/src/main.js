@@ -1,6 +1,7 @@
 import { createApp, h } from "vue";
 import App from "./App.vue";
 import "./index.css";
+import EditTodo from './components/Todos/EditTodo.vue'
 
 createApp(App)
   .component("comp", {
@@ -8,6 +9,7 @@ createApp(App)
       return h("div", "I am comp");
     },
   })
+  // .component('EditTodo', EditTodo)
   .directive("highlight", {
     // 自定义指令
     beforeMount(el, binding, vnode) {

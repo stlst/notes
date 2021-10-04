@@ -18,12 +18,13 @@ export default {
   props: {
     modelValue: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   methods: {
     onInputChange(e) {
-      this.$emit("update", e.target.value);
+      console.log('onInputChange', e.target.value);
+      this.$emit('update:modelValue', e.target.value);
     },
   },
 };

@@ -40,7 +40,7 @@ npm init vite-app <project-name>
 <script>
 export default {
   // 这里声明自定义事件名称，比如这里设置成‘click’，那么就会和原生事件冲突，因此原生事件触发两次
-  emits: ["click"],
+  emits: ['click'],
 };
 </script>
 ```
@@ -128,3 +128,32 @@ this.$watch(
 #### `$on`,`$off` and `$once` 移除
 
 > 被认为不应该由 vue 提供，因此移除了，使用第三方库`mitt`实现
+
+#### vue3 使用 v-model
+
+```html
+<input v-model="newTodo" />
+<!-- 相当于： -->
+<input :modelValue="newTodo" @update:modelValue="newTodo=$event" />
+```
+
+如果要改绑定属性名，只需要给 v-model 传一个参数即可：
+
+```html
+<KyrieInput v-model:title="name" />
+<!-- 等同于 -->
+<KyrieInput :title="name" @update:title="name = $event" />
+```
+
+不仅如此，这个写法还彻底代替了 .sync 修饰符，并且支持统一组件绑定多个 v-model：
+
+```html
+<KyrieInput v-model:title="name" v-model:content="info" />
+<!-- 相当于 -->
+<KyrieInput
+  :title="name"
+  @update:title="name = $event"
+  :content="info"
+  @update:content="info = $event"
+/>
+```

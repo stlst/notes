@@ -51,6 +51,8 @@ export const useTodos = () => {
     state.todos = state.todos.filter((item) => todoItem.id !== item.id);
   };
   const doneEdit = (todoItem: ITodoItem) => {
+    console.log('done edit');
+    // 不需要做其他处理，因为数据双向绑定，其他数据变更已经完成了
     state.editedTodo = null;
   };
   const cancelEdit = (todoItem: ITodoItem) => {
