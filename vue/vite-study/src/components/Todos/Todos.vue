@@ -10,34 +10,8 @@
       @keyup.enter.stop="addTodo"
     ></EditTodo>
     <ul>
-      <li
-        v-for="todo in filteredTodos"
-        :key="todo.id"
-        :class="{ completed: todo.completed, editing: todo === editedTodo }"
-      >
-        <div class="view">
-          <input type="checkbox" v-model="todo.completed" />
-          <label @dblclick="setEditTodo(todo)"
-            >{{ todo.id }} - {{ todo.title }}</label
-          >
-          <button @click="removeTodo(todo)">X</button>
-        </div>
-        <!-- 编辑待办 -->
-        <!-- v-todo-focus 自定义指令 -->
-        <!--相当于 v-model="todo.title" -->
-        <!-- 问题 -->
-        <!-- @keyup.escape无法被触发 -->
-        <!-- @keyup="listenKeyup" -->
-        <EditTodo
-          class="edit"
-          :modelValue="todo.title"
-          @update:modelValue="todo.title = $event"
-          v-todo-focus="todo === editedTodo"
-          @blur="doneEdit(todo)"
-          @keyup.enter="doneEdit(todo)"
-          @keyup.escape="cancelEdit(todo)"
-        ></EditTodo>
-      </li>
+      <TodoItem v-for="todo in filteredTodos" :todo="todo" :key="todo.id">
+      </TodoItem>
     </ul>
     <p class="filter" :class="visibility">
       <span @click="updateVisibility('all')" class="all">All</span>

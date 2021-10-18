@@ -1,5 +1,5 @@
 import { computed, reactive, toRefs, watchEffect } from "vue";
-interface ITodoItem {
+export interface ITodoItem {
   id: number;
   title: string;
   completed: boolean;
@@ -9,7 +9,7 @@ interface IState {
   newTodo: string;
   todos: ITodoItem[];
   count: number;
-  beforeEditCache: string;
+  // beforeEditCache: string;
   editedTodo: ITodoItem;
   visibility: IVisibility;
   filteredTodos: ITodoItem[];
@@ -31,7 +31,6 @@ export const useTodos = () => {
     newTodo: "",
     todos: todoStorage.fetch() as ITodoItem[],
     count: computed(() => state.todos.length),
-    beforeEditCache: "", // 缓存编辑前的title
     editedTodo: null,
     visibility: "all",
     filteredTodos: computed(() => filters[state.visibility](state.todos)),
@@ -47,26 +46,7 @@ export const useTodos = () => {
     });
     state.newTodo = "";
   };
-  const removeTodo = (todoItem: ITodoItem) => {
-    state.todos = state.todos.filter((item) => todoItem.id !== item.id);
-  };
-  const doneEdit = (todoItem: ITodoItem) => {
-    console.log('done edit');
-    // 不需要做其他处理，因为数据双向绑定，其他数据变更已经完成了
-    state.editedTodo = null;
-  };
-  const cancelEdit = (todoItem: ITodoItem) => {
-    console.log("cancelEdit");
 
-    todoItem.title = state.beforeEditCache;
-    state.editedTodo = null;
-  };
-  const setEditTodo = (todoItem: ITodoItem) => {
-    console.log("setEditTodo");
-
-    state.beforeEditCache = todoItem.title;
-    state.editedTodo = todoItem;
-  };
   const filters = {
     all: (todos: ITodoItem[]) => todos,
     active: (todos: ITodoItem[]) => todos.filter((item) => !item.completed),
