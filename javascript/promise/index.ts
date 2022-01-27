@@ -1,46 +1,61 @@
-// 获取promise单例，返回resolve, reject, 以及promise本身
+// ref: https://cloud.tencent.com/developer/article/1780993
+// 高级异步模式 - Promise 单例
 
-const runPromise = async ({ res, rej, p }) => {
-  try {
-    await p;
-    // res("runPromise");
-    return true;
-  } catch (e) {
-    console.log("=eee", e);
-    return false;
-  }
-  // return "123";
-};
-let count = 0;
+/**
+ * 获取promise单例
+ * @returns resolve, reject句柄, 以及promise本身
+ */
 const myPromise = () => {
   let res, rej, p;
   p = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log("==count", count);
-      if (count === 0) {
-        console.log("after timeout");
-        resolve("after timeout");
-      } else {
-        count++;
-        reject("reject");
-      }
-    }, 4000);
     res = resolve;
     rej = reject;
   });
-  debugger;
   return { res, rej, p };
 };
 
+let count = 0;
+const sleep = () => {
+  const { rej, res, p } = myPromise();
+  setTimeout(() => {
+    console.log("==count", count);
+    if (count === 0) {
+      count++;
+      console.log("after timeout");
+      res("after timeout");
+    } else {
+      count++;
+      rej("reject");
+    }
+  }, 4000);
+  return p;
+  // 上面的代码equals to belows:
+  // return new Promise((resolve, reject) => {
+  //   setTimeout(() => {
+  //     console.log("==count", count);
+  //     if (count === 0) {
+  //       count++;
+  //       console.log("after timeout");
+  //       resolve("after timeout");
+  //     } else {
+  //       count++;
+  //       reject("reject");
+  //     }
+  //   }, 4000);
+  // });
+};
+
 const func = async () => {
-  let mp = myPromise();
-  const a = await runPromise(mp);
-  console.log("====a", a);
-  if (!a) {
-    mp = myPromise();
-  }
-  const b = await runPromise(mp);
-  console.log("====b", b);
+  const p = sleep(); // Note we don't `await` yet.
+
+  // promise只能被res或者rej一次;
+  console.time("first await");
+  await p; // 而不是 await sleep()
+  console.timeEnd("first await");
+
+  console.time("second await");
+  await p; // 而不是await sleep()
+  console.timeEnd("second await");
 };
 
 func();
