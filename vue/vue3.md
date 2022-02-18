@@ -157,3 +157,80 @@ this.$watch(
   @update:content="info = $event"
 />
 ```
+
+#### setup script
+
+```ts
+defineProps({
+  model: { type: Object, required: boolean },
+  rules: { type: Object as PropType<Rules>, required: true },
+});
+
+// 向外输出的信息
+defineExpose({});
+
+interface Props {
+  label?: string;
+  prop?: string;
+}
+// 带默认值的prop定义
+const props = withDefaults(defineProps<Props>(), {label:"",prop:""});
+
+// 输出事件
+const emit = defineEmits<{
+  （e: "update:model-value", value: string):void
+}>();
+function onInput(e:Input){
+  const inp = e.target as HtmlInputElement;
+  emit("update:model-value", inp);
+}
+```
+
+使用的地方 App.vue:
+
+```html
+<form :model="model" ref="form">
+  <FormItem label="user" prop="">xxx</FormItem>
+</form>
+```
+
+```ts
+// keep reactive
+const model = reactive({
+  username: 'aaa',
+});
+const error = ref('');
+
+// 监听校验事件
+onMounted(() => {
+  // prop存在才需要校验
+  emitter.on('validate', () => {
+    validate();
+  });
+});
+
+// 这里的key和props来自types.ts
+provide(key, {
+  model: props.model,
+  rules: props.rules,
+});
+
+// 需要获取校验的值和规则
+const formData = inject(key);
+function validate() {
+  // 全局校验：循环执行内部所有FormItem校验逻辑
+}
+```
+
+types.ts
+
+```ts
+import { Rules } from 'async-validator';
+
+export type FormData = {
+  model: Record<string, unknown>;
+  rules?: Rules;
+};
+
+export const key: InjectionKey<FormData> = Symbol('form-data');
+```
