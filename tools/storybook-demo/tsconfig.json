@@ -1,0 +1,17 @@
+{
+  "include": ["src/**/*", "src/index.ts", "src/vue-shim.d.ts"],
+  "exclude": ["node_modules", "src/app/assets/**/*"],
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "module": "esnext",
+    "target": "es5",
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "lib": ["dom", "es5", "es2015.promise"],
+    "sourceMap": true,
+    "pretty": true,
+    "paths": {}
+  }
+}
